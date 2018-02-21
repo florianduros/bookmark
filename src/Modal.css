@@ -1,0 +1,14 @@
+.Modal-container {
+  display: flex;
+}
+
+.Modal-row {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.Modal-row > span {
+  height: 48px;
+  line-height:49px;
+}
