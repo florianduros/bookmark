@@ -12,3 +12,13 @@
   height: 48px;
   line-height:49px;
 }
+
+.Modal-text {
+  color: #BDBDBD;
+  margin-right: 10px;
+}
+
+.Modal-time {
+  margin: 15px 0 15px 0;
+  border-style: none;
+}

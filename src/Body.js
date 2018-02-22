@@ -1,50 +1,66 @@
 import React, { Component } from 'react'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
+import TextField from 'material-ui/TextField'
+import Paper from 'material-ui/Paper'
+import moment from 'moment'
 import Modal from './Modal'
+import Tile from './Tile'
 import './Body.css'
-import { isVimeo, isFlickr } from './urlHandler'
-import Player from '@vimeo/player';
 
 class Body extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      current: {}
-    }
+    this.state = { open: false, filter: '', bookmarks: [
+      {
+        title: 'capybara',
+        isVideo: true,
+        url: 'https://vimeo.com/250953833250953833250953833250953833',
+        author: 'Mr Alpaca',
+        height: 20
+      },
+      {
+        title: 'capybara2',
+        isVideo: true,
+        url: 'https://vimeo.com/250953833250953833250953833250953833',
+        author: 'Mr Alpaca2',
+        height: 20,
+        duration: '30h 10m 20s'
+      },
+      {
+        title: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        isVideo: true,
+        url: 'https://vimeo.com/250953833250953833250953833250953833',
+        author: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        height: 20,
+        duration: '20h 10m'
+      },
+      {
+        title: 'toto',
+        isVideo: false
+      }]}
   }
 
-  handleOpen = () => this.modal.open()
-  handleClose = () => this.setState({ current: {} })
-  handleURL = async (event, value) => {
-    const hasValue = Boolean(value)
-    const video = hasValue ? isVimeo(value) : null
-    const current = {
-      video,
-      picture: hasValue ? isFlickr(value) : null
+  handleSubmit = (evt, bookmark) => {
+    if (bookmark.duration) {
+      const duration = moment.duration(bookmark.duration)
+      bookmark.duration = `${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`
     }
 
-    if (video) {
-      const player = new Player('handstick', { url: value })
-
-      try {
-        current.title = await player.getVideoTitle()
-        current.height = await player.getVideoHeight()
-        current.width = await player.getVideoWidth()
-        current.duration = await player.getDuration()
-      } catch (e) {
-        console.error('unable to get video informations', e)
-      }
-    }
-
-    this.setState({ current })
+    this.setState({ bookmarks: this.state.bookmarks.concat(bookmark).sort(({ title: titleA }, {title: titleB }) => titleA.localeCompare(titleB))})
   }
   render() {
     return (
       <div className="Body">
-        <div id="handstick" hidden></div>
-        <Modal title="Add a bookmark" ref={(modal) => { this.modal = modal; }} handleClose={this.handleClose} handleURL={this.handleURL} data={this.state.current}/>
-        <FloatingActionButton className="Body-floating-button" backgroundColor="#006064" onClick={this.handleOpen}>
+        <Paper className="Body-container" zDepth={1}>
+          <span className="Body-extra">{this.state.bookmarks.length} bookmark(s)</span>
+          <div className="Body-search"><TextField fullWidth={true} hintText="search field on title" onChange={(evt, filter) => this.setState({ filter })}/></div>
+        </Paper>
+        <div className="Body-bookmarks">
+          {this.state.bookmarks.filter(({ title }) => title.includes(this.state.filter)).map((bookmark, index) => (<Tile key={index} bookmark={bookmark}/>))}
+        </div>
+        <Modal title="Add a bookmark" open={this.state.open} handleSubmit={this.handleSubmit}/>
+        <FloatingActionButton className="Body-floating-button" backgroundColor="#006064" onClick={() => this.setState({ open: true })}>
           <ContentAdd />
         </FloatingActionButton>
       </div>

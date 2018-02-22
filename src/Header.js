@@ -3,7 +3,7 @@ import './Header.css'
 
 const Header = () => (
   <header className="Header">
-    <span className="Header-title">Bookmark</span>
+    <span className="Header-title">Bookmarks</span>
   </header>
 )
 

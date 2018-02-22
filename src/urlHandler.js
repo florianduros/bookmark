@@ -1,4 +1,4 @@
-export function getVimeoID(url) {
+function getVimeoID(url) {
   const m = url.match(/^.+vimeo.com\/(.*\/)?([^#?]*)/)
   return m ? m[2] || m[1] : null
 }
@@ -8,5 +8,5 @@ export function isVimeo(url) {
 }
 
 export function isFlickr(url) {
-  return true
+  return url.match(/^https?:\/\/([a-zA-Z\d-]+\.){0,}flickr\.com.*/) !== null
 }

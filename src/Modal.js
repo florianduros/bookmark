@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Dialog from 'material-ui/Dialog'
-import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
-import Divider from 'material-ui/Divider';
-import PropTypes from 'prop-types';
+import TextField from 'material-ui/TextField'
+import FlatButton from 'material-ui/FlatButton'
+import Divider from 'material-ui/Divider'
+import PropTypes from 'prop-types'
+import { isVimeo, isFlickr } from './urlHandler'
 import './Modal.css';
 
 class Modal extends Component {
@@ -11,59 +12,84 @@ class Modal extends Component {
     super(props)
     this.state = {
       open: false,
-      author: false,
-      data: {}
+      error: null,
+      data: { isVideo: false },
     }
   }
 
   static propTypes = {
-    title: PropTypes.string.isRequired,
-    current: PropTypes.object,
-    handleURL: PropTypes.func,
+    open: PropTypes.bool,
     handleSubmit: PropTypes.func,
     handleClose: PropTypes.func
   }
 
-  open = () => this.setState({ open: true })
-  handleClose = () => {
+  static defaultProps = {
+    handleSubmit: () => {},
+    handleClose: () => {},
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.open !== this.state.open) {
+      this.setState({ open: nextProps.open, data: {} })
+    }
+  }
+
+  handleSubmit = (evt) => {
+    this.props.handleSubmit(evt, this.state.data)
     this.setState({ open: false })
-    if (this.props.handleClose) this.props.handleClose()
+  }
+
+  handleURL = (evt, url) => {
+    const data = { ...this.state.data, ...{ url, isVideo: false }};
+    if (isVimeo(url)) {
+      this.setState({ isVideo: true, data: { ...data, ...{ isVideo: true }} , error: null })
+    } else if (isFlickr(url)) {
+      this.setState({ data , error: null })
+    } else {
+      this.setState({ data: { ...this.state.data, ...{ url: false }}, error: 'The URL is not from vimeo or a flickr.' })
+    }
   }
 
   render() {
     const actions = [
       <FlatButton
-      label="Cancel"
-      primary={true}
-      onClick={this.handleClose}
+        label="Cancel"
+        primary={true}
+        onClick={() => this.setState({ open: false })}
       />,
       <FlatButton
         label="Submit"
         primary={true}
-    //    disabled={!(this.state.url && this.state.author)}
-        onClick={this.props.handleSubmit}
+        disabled={!(this.state.data.url && this.state.data.title)}
+        onClick={this.handleSubmit}
       />,
     ];
 
     return (
       <Dialog
-        title={this.props.title}
+        title='Add a bookmark'
         actions={actions}
         modal={true}
         open={this.state.open}>
-        <TextField floatingLabelText="URL" fullWidth={true} underlineShow={false} onChange={this.props.handleURL}/>
-        <Divider />
-        <TextField floatingLabelText="Title" fullWidth={true} underlineShow={false} value={this.props.data.title}/>
-        <Divider />
-        <TextField floatingLabelText="Author name" fullWidth={true} underlineShow={false}/>
-        <Divider />
-        <TextField floatingLabelText="Width in pixels" fullWidth={true} type="number" underlineShow={false} defaultValue={this.props.data.width}/>
-        <Divider />
-        <TextField floatingLabelText="Height in pixels" fullWidth={true} type="number" underlineShow={false} defaultValue="10" value={this.props.data.height}/>
-        <Divider />
-        {this.props.data.video &&
-          <TextField floatingLabelText="Duration in seconds" fullWidth={true} type="number" underlineShow={false} value={this.props.data.duration}/>
-        }
+          <TextField hintText="Title" fullWidth={true} underlineShow={false} onChange={(evt, title) => this.setState({ data: {...this.state.data, ...{ title }}})}/>
+          <Divider />
+          <TextField hintText="URL" fullWidth={true} underlineShow={false} onChange={this.handleURL} errorText={this.state.error}/>
+          <Divider />
+          <TextField hintText="Author name" fullWidth={true} underlineShow={false} onChange={(evt, author) => this.setState({ data: {...this.state.data, ...{ author }}})}/>
+          <Divider />
+          <TextField hintText="Width in pixels" fullWidth={true} type="number" underlineShow={false} onChange={(evt, pixels) => this.setState({ data: {...this.state.data, ...{ pixels }}})}/>
+          <Divider />
+          <TextField hintText="Height in pixels" fullWidth={true} type="number" underlineShow={false} onChange={(evt, height) => this.setState({ data: {...this.state.data, ...{ height }}})}/>
+          {this.state.data.isVideo &&
+            <Fragment>
+              <Divider />
+              <div>
+                <span className="Modal-text">Duration</span>
+                <input className="Modal-time" type="time" step="1" onChange={({ target }) => this.setState({ data: {...this.state.data, ...{ duration: target.value }}})}/>
+              </div>
+            </Fragment>
+          }
+          The Title and URL fields must be filled
       </Dialog>
     )
   }
