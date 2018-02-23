@@ -4,6 +4,7 @@
   align-items: flex-start;
   position: relative;
   font-size: 14px;
+  padding: 15px;
 }
 
 .Tile-container > img {
@@ -18,10 +19,6 @@
   overflow: hidden;
 }
 
-.Tile-container > span, a {
-  margin: 15px 15px 0 15px;
-}
-
 .Tile-title {
   font-size: 16px;
   font-weight: bold;
@@ -29,6 +26,7 @@
 }
 
 .Tile-url {
+  margin-top: 8px;
   width: 280px;
 }
 
@@ -44,12 +42,7 @@
 
 .Tile-row {
   display: flex;
-  margin: 8px 0 0 15px;
-}
-
-.Tile-row-second {
-  display: flex;
-  margin: 8px 15px 0 0;
+  margin-top: 8px;
 }
 
 .Tile-row-title {

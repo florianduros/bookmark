@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper'
 import './Tile.css'
 
 const style = {
-  height: 158,
+  height: 154,
   width: 300,
   margin: 20,
   display: 'inline-block',
@@ -28,7 +28,7 @@ class Tile extends Component {
                (<span className="Tile-text">unknown</span>)
               }
             </div>
-            <div className="Tile-row-second">
+            <div className="Tile-row">
               <span className="Tile-row-title Tile-text">Width</span>
               {this.props.bookmark.width ? (<span className="Tile-text">{this.props.bookmark.width}px</span>) :
                (<span className="Tile-text">unknown</span>)
