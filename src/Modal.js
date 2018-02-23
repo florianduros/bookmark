@@ -11,7 +11,6 @@ class Modal extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      open: false,
       error: null,
       data: { isVideo: false },
     }
@@ -29,14 +28,17 @@ class Modal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.open !== this.state.open) {
-      this.setState({ open: nextProps.open, data: {} })
+    if (nextProps.open) {
+      this.setState({ data: {} })
     }
+  }
+
+  handleClose = (evt) => {
+    this.props.handleClose(evt)
   }
 
   handleSubmit = (evt) => {
     this.props.handleSubmit(evt, this.state.data)
-    this.setState({ open: false })
   }
 
   handleURL = (evt, url) => {
@@ -55,7 +57,7 @@ class Modal extends Component {
       <FlatButton
         label="Cancel"
         primary={true}
-        onClick={() => this.setState({ open: false })}
+        onClick={this.handleClose}
       />,
       <FlatButton
         label="Submit"
@@ -70,7 +72,7 @@ class Modal extends Component {
         title='Add a bookmark'
         actions={actions}
         modal={true}
-        open={this.state.open}>
+        open={this.props.open}>
           <TextField hintText="Title" fullWidth={true} underlineShow={false} onChange={(evt, title) => this.setState({ data: {...this.state.data, ...{ title }}})}/>
           <Divider />
           <TextField hintText="URL" fullWidth={true} underlineShow={false} onChange={this.handleURL} errorText={this.state.error}/>

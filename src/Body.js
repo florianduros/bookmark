@@ -47,7 +47,7 @@ class Body extends Component {
       bookmark.duration = `${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`
     }
 
-    this.setState({ bookmarks: this.state.bookmarks.concat(bookmark).sort(({ title: titleA }, {title: titleB }) => titleA.localeCompare(titleB))})
+    this.setState({ open: false, bookmarks: this.state.bookmarks.concat(bookmark).sort(({ title: titleA }, {title: titleB }) => titleA.localeCompare(titleB))})
   }
   render() {
     return (
@@ -59,7 +59,7 @@ class Body extends Component {
         <div className="Body-bookmarks">
           {this.state.bookmarks.filter(({ title }) => title.includes(this.state.filter)).map((bookmark, index) => (<Tile key={index} bookmark={bookmark}/>))}
         </div>
-        <Modal title="Add a bookmark" open={this.state.open} handleSubmit={this.handleSubmit}/>
+        <Modal title="Add a bookmark" open={this.state.open} handleSubmit={this.handleSubmit} handleClose={() => this.setState({ open: false })}/>
         <FloatingActionButton className="Body-floating-button" backgroundColor="#006064" onClick={() => this.setState({ open: true })}>
           <ContentAdd />
         </FloatingActionButton>
