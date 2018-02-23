@@ -8,6 +8,16 @@ import Modal from './Modal'
 import Tile from './Tile'
 import './Body.css'
 
+
+const styles = {
+  hintStyle: {
+    color: 'black',
+  },
+  underlineStyle: {
+    borderColor: 'black'
+  }
+};
+
 class Body extends Component {
   constructor(props) {
     super(props)
@@ -52,10 +62,12 @@ class Body extends Component {
   render() {
     return (
       <div className="Body">
-        <Paper className="Body-container" zDepth={1}>
+        <div className="Body-container">
           <span className="Body-extra">{this.state.bookmarks.length} bookmark(s)</span>
-          <div className="Body-search"><TextField fullWidth={true} hintText="search field on title" onChange={(evt, filter) => this.setState({ filter })}/></div>
-        </Paper>
+          <div className="Body-search-container">
+            <div className="Body-search"><TextField hintStyle={styles.hintStyle} underlineStyle={styles.underlineStyle} hintText="search field on title" onChange={(evt, filter) => this.setState({ filter })}/></div>
+          </div>
+        </div>
         <div className="Body-bookmarks">
           {this.state.bookmarks.filter(({ title }) => title.includes(this.state.filter)).map((bookmark, index) => (<Tile key={index} bookmark={bookmark}/>))}
         </div>

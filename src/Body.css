@@ -7,21 +7,24 @@
 }
 
 .Body-container {
-  margin: 20px;
-  position: relative;
   display: flex;
-  justify-content: center;
+  padding: 20px;
+  min-height: 48px;
 }
 
-.Body-search {
-  width: 300px;
+.Body-search-container {
+  display: flex;
+  justify-content: center;
+  margin-left: 20px;
 }
 
 .Body-extra {
-  position: absolute;
-  left: 10px;
-  top: 15px;
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.Body-bookmarks {
+  overflow: auto;
 }
 
 .Body-floating-button {
