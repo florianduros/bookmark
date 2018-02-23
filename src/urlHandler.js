@@ -1,12 +1,17 @@
-function getVimeoID(url) {
-  const m = url.match(/^.+vimeo.com\/(.*\/)?([^#?]*)/)
-  return m ? m[2] || m[1] : null
-}
-
+/**
+ * Test if the url is from vimeo
+ * @param {string} url
+ * @return {boolean}
+ */
 export function isVimeo(url) {
-  return getVimeoID(url) !== null
+return url.match(/^https?:\/\/([a-zA-Z\d-]+\.){0,}vimeo\.com.*/) !== null
 }
 
+/**
+ * Test if the url is from flickr
+ * @param {string} url
+ * @return {boolean}
+ */
 export function isFlickr(url) {
   return url.match(/^https?:\/\/([a-zA-Z\d-]+\.){0,}flickr\.com.*/) !== null
 }
