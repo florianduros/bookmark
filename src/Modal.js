@@ -17,7 +17,7 @@ class Modal extends Component {
   }
 
   static propTypes = {
-    open: PropTypes.bool,
+    open: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.func,
     handleClose: PropTypes.func
   }
@@ -31,14 +31,6 @@ class Modal extends Component {
     if (nextProps.open) {
       this.setState({ data: {} })
     }
-  }
-
-  handleClose = (evt) => {
-    this.props.handleClose(evt)
-  }
-
-  handleSubmit = (evt) => {
-    this.props.handleSubmit(evt, this.state.data)
   }
 
   handleURL = (evt, url) => {
@@ -57,13 +49,13 @@ class Modal extends Component {
       <FlatButton
         label="Cancel"
         primary={true}
-        onClick={this.handleClose}
+        onClick={this.props.handleClose}
       />,
       <FlatButton
         label="Submit"
         primary={true}
         disabled={!(this.state.data.url && this.state.data.title)}
-        onClick={this.handleSubmit}
+        onClick={(evt => this.props.handleSubmit(evt, this.state.data))}
       />,
     ];
 

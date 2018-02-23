@@ -19,29 +19,23 @@ class Tile extends Component {
           <a className="Tile-url Tile-ellipsis" href={this.props.bookmark.url}>{this.props.bookmark.url}</a>
           <div className="Tile-row">
             <span className="Tile-row-title Tile-text">Author</span>
-            <span className="Tile-author Tile-ellipsis Tile-text">{this.props.bookmark.author}</span>
+            <span className="Tile-author Tile-ellipsis Tile-text">{this.props.bookmark.author ? this.props.bookmark.author: 'unknown'}</span>
           </div>
           <div className="Tile-container-row">
             <div className="Tile-row">
               <span className="Tile-row-title Tile-text">Height</span>
-              {this.props.bookmark.height ? (<span className="Tile-text">{this.props.bookmark.height}px</span>) :
-               (<span className="Tile-text">unknown</span>)
-              }
+              <span className="Tile-text">{this.props.bookmark.height ? `${this.props.bookmark.height}px` : 'unknown'}</span>
             </div>
             <div className="Tile-row">
               <span className="Tile-row-title Tile-text">Width</span>
-              {this.props.bookmark.width ? (<span className="Tile-text">{this.props.bookmark.width}px</span>) :
-               (<span className="Tile-text">unknown</span>)
-              }
+              <span className="Tile-text">{this.props.bookmark.width ? `${this.props.bookmark.width}px` : 'unknown'}</span>
             </div>
           </div>
           {this.props.bookmark.isVideo &&
             <Fragment>
               <div className="Tile-row">
                 <span className="Tile-row-title Tile-text">Duration</span>
-                {this.props.bookmark.duration ? (<span className="Tile-text">{this.props.bookmark.duration}</span>) :
-                (<span className="Tile-text">unknown</span>)
-              }
+                <span className="Tile-text">{this.props.bookmark.duration ? this.props.bookmark.duration : 'unknown' }</span>
               </div>
             </Fragment>
           }
