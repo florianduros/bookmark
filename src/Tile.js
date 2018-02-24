@@ -1,21 +1,39 @@
 import React, { Component, Fragment } from 'react'
 import Paper from 'material-ui/Paper'
+import Chip from 'material-ui/Chip'
+import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit'
+import PropTypes from 'prop-types'
 import './Tile.css'
 
 const style = {
-  height: 154,
   width: 300,
-  margin: 20,
+  margin: 10,
   display: 'inline-block',
 };
 
 class Tile extends Component {
+
+  static propTypes = {
+    handleDelete: PropTypes.func,
+    handleEdit: PropTypes.func,
+  }
+
+  static defaultProps = {
+    handleDelete: () => {},
+    handleEdit: () => {}
+  }
+
   render() {
     return (
       <Paper style={style} zDepth={1}>
         <div className="Tile-container">
           {this.props.bookmark.isVideo ? (<img alt="vimeo" src="vimeo.png"/>) : (<img alt="flickr" src="flickr.png"/>)}
-          <span className="Tile-title Tile-ellipsis">{this.props.bookmark.title}</span>
+          <div className="Tile-title-container">
+            <span className="Tile-title Tile-ellipsis">{this.props.bookmark.title}</span>
+            <EditIcon onClick={this.props.handleEdit}/>
+            <DeleteIcon onClick={this.props.handleDelete}/>
+          </div>
           <a className="Tile-url Tile-ellipsis" href={this.props.bookmark.url}>{this.props.bookmark.url}</a>
           <div className="Tile-row">
             <span className="Tile-row-title Tile-text">Author</span>
@@ -35,9 +53,16 @@ class Tile extends Component {
             <Fragment>
               <div className="Tile-row">
                 <span className="Tile-row-title Tile-text">Duration</span>
-                <span className="Tile-text">{this.props.bookmark.duration ? this.props.bookmark.duration : 'unknown' }</span>
+                <span className="Tile-text">{this.props.bookmark.fancyDuration ? this.props.bookmark.fancyDuration : 'unknown' }</span>
               </div>
             </Fragment>
+          }
+          {this.props.bookmark.tags.length ?
+            <div className="Tile-tags-container">
+              {this.props.bookmark.tags.map((tag, index) => (
+              <Chip key={index} style={{ margin: "4px"}}>{tag}</Chip>
+            ))}
+            </div> : ('')
           }
         </div>
       </Paper>
