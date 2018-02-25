@@ -15,13 +15,14 @@ const style = {
 class Tile extends Component {
 
   static propTypes = {
+    bookmark: PropTypes.object.isRequired,
     handleDelete: PropTypes.func,
     handleEdit: PropTypes.func,
   }
 
   static defaultProps = {
     handleDelete: () => {},
-    handleEdit: () => {}
+    handleEdit: () => {},
   }
 
   render() {
