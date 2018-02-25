@@ -23,35 +23,35 @@ class Body extends Component {
     super(props)
     this.state = { openAdd: false, openEdit: false, filter: '', display: 'table', bookmarks: [
       {
-        title: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        title: 'capybara hot springs',
         isVideo: true,
-        url: 'https://vimeo.com/250953833250953833250953833250953833',
-        author: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-        height: 20,
-        duration: '20:10',
-        fancyDuration: '20h 10m',
-        tags: []
+        url: 'https://vimeo.com/122311493',
+        author: 'Leonid Kosolapov',
+        width: 800,
+        height: 600,
+        tags: ['capybara', 'hot'],
+        duration: '00:02:12',
+        fancyDuration: '00h 02m 12s'
       },
       {
-        title: 'capybara',
-        isVideo: true,
-        url: 'https://vimeo.com/250953833250953833250953833250953833',
-        author: 'Mr Alpaca',
-        height: 20,
-        tags: ['capybara', 'alpaca']
-      },
-      {
-        title: 'capybara2',
-        isVideo: true,
-        url: 'https://vimeo.com/250953833250953833250953833250953833',
-        author: 'Mr Alpaca2',
-        height: 20,
-        tags: ['capybara', 'alpaca']
-      },
-      {
-        title: 'toto',
+        title: 'emu',
         isVideo: false,
-        tags: []
+        url: 'https://www.flickr.com/photos/mathiasappel/25838827250/in/photolist-FEmvgg-FnhK8y-F5dF5s-ED7Tsf-b81pDg-8in8kt-5Xoi3a-whpJbA-qiMxu5-oukrZ3-ouks7N-ecWt4C-oFSY5R-oXXURQ-6fGHnd-s3kDem-47zrmt-r2sWsM-9HU7KM-bHW1ta-F3iXFx-e72uhp-aA2f4p-aBQLHE-gKUdgz-A6wHy-eVE3cV-e1hHKA-b8EYN-9pE4AJ-4NyESZ-994ZaD-7w22D4-dUMVRi-cefnNd-dwBFFq-u7sme-p7kL75-poYEmx-6kGMJa-6RtiNi-9PP3pM-6jbGzA-f8kNhM-cgFQjC-GZZZCj-9amCzM-e72usX-aoaGkF-5TuBc1',
+        author: 'Mathias Appel',
+        width: 1920,
+        height: 1080,
+        tags: ['animals', 'emu']
+      },
+      {
+        title: 'SEASONS',
+        isVideo: true,
+        url: 'https://vimeo.com/250953833',
+        author: 'sam yurkovich',
+        width: 1920,
+        height: 1080,
+        duration: '00:01:21',
+        fancyDuration: '00h 01m 21s',
+        tags: ['black and white']
       }
     ]}
   }
