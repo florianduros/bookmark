@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import TextField from 'material-ui/TextField'
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import moment from 'moment'
 import Modal from './Modal'
 import List from './List'
+import Table from './Table'
 import './Body.css'
 
 const styles = {
@@ -19,7 +21,7 @@ const styles = {
 class Body extends Component {
   constructor(props) {
     super(props)
-    this.state = { openAdd: false, openEdit: false, filter: '', bookmarks: [
+    this.state = { openAdd: false, openEdit: false, filter: '', display: 'table', bookmarks: [
       {
         title: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         isVideo: true,
@@ -50,7 +52,8 @@ class Body extends Component {
         title: 'toto',
         isVideo: false,
         tags: []
-      }]}
+      }
+    ]}
   }
 
   computeDuration = (bookmark) => {
@@ -80,6 +83,13 @@ class Body extends Component {
     return bookmarks.sort(({ title: titleA }, {title: titleB }) => titleA.localeCompare(titleB))
   }
 
+  getBookmarks = () => {
+    return this.state.bookmarks
+      .map((bookmark, index) => Object.assign(bookmark, { index }))
+      .filter(({ title, tags }) => title.toLowerCase().includes(this.state.filter.toLowerCase()) ||
+                                    tags.some(tag => tag.toLowerCase().includes(this.state.filter.toLowerCase())))
+  }
+
   render() {
     return (
       <div className="Body">
@@ -88,8 +98,15 @@ class Body extends Component {
           <div className="Body-search-container">
             <div className="Body-search"><TextField hintStyle={styles.hintStyle} underlineStyle={styles.underlineStyle} hintText="search field on title and tags" onChange={(evt, filter) => this.setState({ filter })}/></div>
           </div>
+          <RadioButtonGroup name="display" className="Body-button" defaultSelected={this.state.display} onChange={(evt, value) => this.setState( { display: value} )}>
+            <RadioButton value="table" label="Table"/>
+            <RadioButton value="list" label="List" style={{ marginLeft: "10px" }} />
+          </RadioButtonGroup>
         </div>
-        <List bookmarks={this.state.bookmarks} filter={this.state.filter} handleEdit={this.handleBeforeEdit} handleDelete={this.handleBeforeDelete} />
+        {this.state.display === 'table' ?
+          <Table bookmarks={this.getBookmarks()} handleEdit={this.handleBeforeEdit} handleDelete={this.handleBeforeDelete} /> :
+          <List bookmarks={this.getBookmarks()} handleEdit={this.handleBeforeEdit} handleDelete={this.handleBeforeDelete} />
+        }
         <Modal title="Add a bookmark" open={this.state.openAdd} handleSubmit={this.handleAdd} handleClose={() => this.setState({ openAdd: false })}/>
         <Modal title="Edit a bookmark" bookmark={this.state.current} handleSubmit={this.handleEdit} open={this.state.openEdit} handleClose={() => this.setState({ openEdit: false })}/>
         <FloatingActionButton className="Body-floating-button" backgroundColor="#006064" onClick={() => this.setState({ openAdd: true })}>

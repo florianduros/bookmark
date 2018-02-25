@@ -11,21 +11,24 @@ const bookmarks = [
     isVideo: true,
     url: 'https://vimeo.com/25095383',
     author: 'Author 1',
-    tags: ['tag1', 'tag2']
+    tags: ['tag1', 'tag2'],
+    index: 0,
   },
   {
     title: 'Different',
     isVideo: true,
     url: 'https://vimeo.com/25095383',
     author: 'Author 2',
-    tags: ['other tag']
+    tags: ['other tag'],
+    index: 2
   },
   {
     title: 'Other title',
     isVideo: false,
     url: 'https://vimeo.com/25095383',
     author: 'Author 3',
-    tags: []
+    tags: [],
+    index: 5
   },
 ]
 
@@ -39,19 +42,5 @@ it('all the bookmarks are displayed', () => {
   const div = document.createElement('div');
   const mui = ReactDOM.render(<MuiThemeProvider><List bookmarks={bookmarks}/></MuiThemeProvider>, div);
   expect(ReactTestUtils.scryRenderedComponentsWithType(mui, Tile).length).toBe(3)
-  ReactDOM.unmountComponentAtNode(div);
-});
-
-it('filter the bookmarks on title', () => {
-  const div = document.createElement('div');
-  const mui = ReactDOM.render(<MuiThemeProvider><List bookmarks={bookmarks} filter={'title' }/></MuiThemeProvider>, div);
-  expect(ReactTestUtils.scryRenderedComponentsWithType(mui, Tile).length).toBe(2)
-  ReactDOM.unmountComponentAtNode(div);
-});
-
-it('filter the bookmarks on title and tags', () => {
-  const div = document.createElement('div');
-  const mui = ReactDOM.render(<MuiThemeProvider><List bookmarks={bookmarks} filter={'other' }/></MuiThemeProvider>, div);
-  expect(ReactTestUtils.scryRenderedComponentsWithType(mui, Tile).length).toBe(2)
   ReactDOM.unmountComponentAtNode(div);
 });
