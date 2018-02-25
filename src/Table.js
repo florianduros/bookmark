@@ -47,6 +47,9 @@ class Table extends Component {
               Header: 'URL',
               accessor: 'url',
               style: { margin: 'auto', textAlign: 'center'},
+              Cell: row => (
+                <a href={row.value}>{row.value}</a>
+              )
             },
             {
               Header: 'Width',
