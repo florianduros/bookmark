@@ -91,7 +91,7 @@ class Modal extends Component {
           <div className="Modal-tags-add">
             <span>Tags</span>
             <TextField  className="Modal-tags-input" fullWidth={true} hintText="tag name" onChange={(evt, currentTag) => this.setState({ currentTag })} />
-            <RaisedButton label="Add" secondary={true} onClick={() => this.setState({ tags: this.state.tags.concat(this.state.currentTag) })}/>
+            <RaisedButton label="Add" secondary={true} onClick={() => { if(this.state.currentTag && this.state.currentTag.length) this.setState({ tags: this.state.tags.concat(this.state.currentTag) }) }}/>
           </div>
           <div className="Modal-tags-container">
             {this.state.tags.map((tag, index) => (
