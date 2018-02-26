@@ -40,6 +40,10 @@ class Tile extends Component {
             <span className="Tile-row-title Tile-text">Author</span>
             <span className="Tile-author Tile-ellipsis Tile-text">{this.props.bookmark.author ? this.props.bookmark.author: 'unknown'}</span>
           </div>
+          <div className="Tile-row">
+            <span className="Tile-row-title Tile-text">Date</span>
+            <span className="Tile-author Tile-ellipsis Tile-text">{this.props.bookmark.date.calendar()}</span>
+          </div>
           <div className="Tile-container-row">
             <div className="Tile-row">
               <span className="Tile-row-title Tile-text">Height</span>

@@ -52,6 +52,13 @@ class Table extends Component {
               )
             },
             {
+              Header: 'Added date',
+              accessor: 'date',
+              className : 'Table-cell',
+              style: { margin: 'auto', textAlign: 'center'},
+              Cell: row => (<span>{row.value.calendar()}</span>)
+            },
+            {
               Header: 'Width',
               accessor: 'width',
               className : 'Table-cell',

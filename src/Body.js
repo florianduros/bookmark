@@ -29,6 +29,7 @@ class Body extends Component {
         author: 'Leonid Kosolapov',
         width: 800,
         height: 600,
+        date: moment(),
         tags: ['capybara', 'hot'],
         duration: '00:02:12',
         fancyDuration: '00h 02m 12s'
@@ -40,6 +41,7 @@ class Body extends Component {
         author: 'Mathias Appel',
         width: 1920,
         height: 1080,
+        date: moment(),
         tags: ['animals', 'emu']
       },
       {
@@ -49,6 +51,7 @@ class Body extends Component {
         author: 'sam yurkovich',
         width: 1920,
         height: 1080,
+        date: moment(),
         duration: '00:01:21',
         fancyDuration: '00h 01m 21s',
         tags: ['black and white']
@@ -64,6 +67,7 @@ class Body extends Component {
   }
 
   handleAdd = (evt, bookmark) => {
+    bookmark.date = moment()
     this.computeDuration(bookmark)
     this.setState({ openAdd: false, bookmarks: this.sort(this.state.bookmarks.concat(bookmark)) })
   }
